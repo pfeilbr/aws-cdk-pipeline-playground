@@ -62,12 +62,34 @@ git push
 # the pipeline automatically reconfigures itself to add the new stage and
 # deploy to it
 
-
+# modify solution and/or pipeline, commit, and iterate
 
 ```
 
 ## Notes
 
+Each pipeline stage is compiled into it's own cloud assembly as follows:
+
+* `cdk.out/assembly-Dev`
+* `cdk.out/assembly-CdkpipelinesDemoPipelineStack-PreProd`
+* `cdk.out/assembly-CdkpipelinesDemoPipelineStack-Prod`
+
+You can deploy and individual stage (cfn stack) by itself.  For example, for dev.
+
+```sh
+npm run build # If necessary, to recompile the Lambda sources
+cdk synth
+cdk -a cdk.out/assembly-Dev deploy --force --require-approval never
+
+# ensure dev account is bootstrapped first
+npx cdk bootstrap \
+  --cloudformation-execution-policies arn:aws:iam::aws:policy/AdministratorAccess \
+  aws://DEVELOPER_ACCOUNT/us-east-1
+```
+
+---
+
+* see [`cdk-deploy-to.sh`](cdk-deploy-to.sh) for handy deployment script for different account+region combinations.  Remember to bootstrap target account+region with `cdk bootstrap aws://account/region`
 * had to downgrade npm 7 to 6 to get around types error when running `npm run build` on codebuild. see [self mutating cdk pipeline fails after updating cdk version from 1.85.0 to 1.92.0 · Issue #13541 · aws/aws-cdk](https://github.com/aws/aws-cdk/issues/13541#issuecomment-801606777)
     ```sh
     # steps

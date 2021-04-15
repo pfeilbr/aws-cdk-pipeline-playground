@@ -2,6 +2,7 @@
 import "source-map-support/register";
 import * as cdk from "@aws-cdk/core";
 import { CdkpipelinesDemoPipelineStack } from "../lib/aws-cdk-demo-pipeline-stack";
+import { CdkpipelinesDemoStage } from "../lib/aws-cdk-pipeline-demo-stage";
 
 const app = new cdk.App();
 new CdkpipelinesDemoPipelineStack(app, "CdkpipelinesDemoPipelineStack", {
@@ -18,5 +19,14 @@ new CdkpipelinesDemoPipelineStack(app, "CdkpipelinesDemoPipelineStack", {
   env: {
     account: process.env.CDK_DEPLOY_ACCOUNT || process.env.CDK_DEFAULT_ACCOUNT,
     region: process.env.CDK_DEPLOY_REGION || process.env.CDK_DEFAULT_REGION,
+  },
+});
+
+// this is for manual deployment of Dev environment (stack) via
+// cdk -a cdk.out/assembly-Dev deploy --force --require-approval never
+new CdkpipelinesDemoStage(app, "Dev", {
+  env: {
+    account: process.env.CDK_DEFAULT_ACCOUNT,
+    region: process.env.CDK_DEFAULT_REGION,
   },
 });
