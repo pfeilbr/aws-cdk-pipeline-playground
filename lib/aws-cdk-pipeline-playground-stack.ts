@@ -18,6 +18,9 @@ export class AwsCdkPipelinePlaygroundStack extends cdk.Stack {
           // This assumes a handler function in lib/lambda/index.js
           code: lambda.Code.fromAsset(`${__dirname}/lambda`),
           handler: "index.handler",
+          environment: {
+            MESSAGE: "hello from v2",
+          },
         },
         apiGatewayProps: {
           defaultMethodOptions: {

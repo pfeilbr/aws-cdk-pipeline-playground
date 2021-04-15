@@ -2,7 +2,13 @@
 
 learn AWS [CDK Pipelines](https://aws.amazon.com/blogs/developer/cdk-pipelines-continuous-delivery-for-aws-cdk-applications/)
 
-CI/CD pipeline and solution code exist in single CDK project / repo.  Any commits automatically trigger a [CodePipeline](https://aws.amazon.com/codepipeline/) to run and deploy changes to production.
+CI/CD pipeline and solution code exist in single CDK project / repo.  Any commits to `main` automatically trigger a [CodePipeline](https://aws.amazon.com/codepipeline/) to run and deploy changes to production.  The changes can be to the solution or the pipeline itself.
+
+## High-level Workflow
+
+1. Create solution stack [`lib/aws-cdk-pipeline-playground-stack.ts`](lib/aws-cdk-pipeline-playground-stack.ts) (`API gateway -> Lambda`).
+1. Create stage [`lib/aws-cdk-pipeline-demo-stage.ts`](lib/aws-cdk-pipeline-demo-stage.ts)(`CdkpipelinesDemoStage`) that wraps the solution stack (`AwsCdkPipelinePlaygroundStack`) for CodePipeline
+1. Create pipeline stack [`lib/aws-cdk-demo-pipeline-stack.ts`](lib/aws-cdk-demo-pipeline-stack.ts) and add `CdkpipelinesDemoStage` stage to it
 
 ## Steps
 
@@ -38,6 +44,8 @@ npm run test
 
 # [optional] if not already ran
 cdk bootstrap
+
+# ensure `cdk-pipeline-01-github-token` exists in Secrets Manager
 
 # one-time operation, deploy the pipeline stack from local machine
 cdk deploy  --force --require-approval never
