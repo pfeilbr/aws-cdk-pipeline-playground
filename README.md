@@ -42,8 +42,9 @@ npm run test
 
 # provision pipeline
 
-# [optional] if not already ran
-cdk bootstrap
+# [optional] if not already ran.  bootstrap for each target account+region combination
+cdk bootstrap aws://AWS_ACCOUNT_NUMBER/us-east-1
+cdk bootstrap aws://AWS_ACCOUNT_NUMBER/us-west-1
 
 # ensure `cdk-pipeline-01-github-token` exists in Secrets Manager
 

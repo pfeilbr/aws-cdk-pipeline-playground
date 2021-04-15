@@ -39,12 +39,9 @@ export class CdkpipelinesDemoPipelineStack extends Stack {
       }),
     });
 
-    const preprod = new CdkpipelinesDemoStage(
-      this,
-      "PreProd" /*, {
+    const preprod = new CdkpipelinesDemoStage(this, "PreProd", {
       env: { account: "529276214230", region: "us-east-1" },
-    } */
-    );
+    });
 
     const preprodStage = pipeline.addApplicationStage(preprod);
     preprodStage.addActions(
@@ -59,6 +56,13 @@ export class CdkpipelinesDemoPipelineStack extends Stack {
           // Use 'curl' to GET the given URL and fail if it returns an error
           "curl -Ssf $ENDPOINT_URL",
         ],
+      })
+    );
+
+    // add production stage
+    pipeline.addApplicationStage(
+      new CdkpipelinesDemoStage(this, "Prod", {
+        env: { account: "529276214230", region: "us-east-1" },
       })
     );
   }
