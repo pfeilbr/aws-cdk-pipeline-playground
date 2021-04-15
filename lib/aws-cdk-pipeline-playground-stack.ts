@@ -2,7 +2,7 @@ import * as cdk from "@aws-cdk/core";
 import { ApiGatewayToLambda } from "@aws-solutions-constructs/aws-apigateway-lambda";
 import * as lambda from "@aws-cdk/aws-lambda";
 export class AwsCdkPipelinePlaygroundStack extends cdk.Stack {
-  public readonly urlOutput: CfnOutput;
+  public readonly urlOutput: cdk.CfnOutput;
 
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
