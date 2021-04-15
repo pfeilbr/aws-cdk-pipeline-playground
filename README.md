@@ -116,6 +116,10 @@ npx cdk bootstrap \
 
 ---
 
+*original cdk generated `README.md` below*
+
+---
+
 # Welcome to your CDK TypeScript project!
 
 This is a blank project for TypeScript development with CDK.
