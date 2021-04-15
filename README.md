@@ -28,7 +28,21 @@ npm i @aws-solutions-constructs/aws-apigateway-lambda@1.97.0
 * [cdkworkshop.com | CDK PIPELINES](https://cdkworkshop.com/40-dotnet/70-advanced-topics/100-pipelines.html)
 * [@aws-cdk/pipelines module · AWS CDK](https://docs.aws.amazon.com/cdk/api/latest/docs/pipelines-readme.html)
 
+## Scratch
 
+```sh
+npm i \
+@aws-cdk/aws-events@1.97.0 \
+@aws-cdk/aws-cloudformation@1.97.0 \
+@aws-cdk/aws-iam@1.97.0 \
+@aws-cdk/aws-codedeploy@1.97.0 \
+@aws-cdk/aws-ecr@1.97.0 \
+@aws-cdk/aws-ecs@1.97.0 \
+@aws-cdk/aws-s3@1.97.0 \
+@aws-cdk/aws-signer@1.97.0 \
+@aws-cdk/aws-ecr-assets@1.97.0 \
+@aws-cdk/aws-s3-assets@1.97.0
+```
 ---
 
 # Welcome to your CDK TypeScript project!
