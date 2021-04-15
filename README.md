@@ -7,20 +7,36 @@ learn AWS [CDK Pipelines](https://aws.amazon.com/blogs/developer/cdk-pipelines-c
 ```sh
 npx cdk init --language=typescript
 
+CDK_VERSION="1.97.0"
+
 # install pipeline deps
 npm install \
-    @aws-cdk/aws-codepipeline@1.97.0 \
-    @aws-cdk/aws-codepipeline-actions@1.97.0 \
-    @aws-cdk/pipelines@1.97.0
+    @aws-cdk/aws-codepipeline@$CDK_VERSION \
+    @aws-cdk/aws-codepipeline-actions@$CDK_VERSION \
+    @aws-cdk/pipelines@$CDK_VERSION
 
 # leverages `@aws-solutions-constructs/aws-apigateway-lambda`
 # see https://docs.aws.amazon.com/solutions/latest/constructs/aws-apigateway-lambda.html
-# note CDK version must match `aws-solutions-constructs` version (e.g. 1.97.0)
-npm i @aws-solutions-constructs/aws-apigateway-lambda@1.97.0
+# note CDK version must match `aws-solutions-constructs` version (e.g. $CDK_VERSION)
+npm i \
+    @aws-cdk/aws-apigateway@$CDK_VERSION \
+    @aws-cdk/aws-lambda@$CDK_VERSION \
+    @aws-solutions-constructs/aws-apigateway-lambda@$CDK_VERSION
 
 
 
 ```
+
+## Notes
+
+* had to downgrade npm 7 to 6 to get around types error when running `npm run build` on codebuild. see [self mutating cdk pipeline fails after updating cdk version from 1.85.0 to 1.92.0 · Issue #13541 · aws/aws-cdk](https://github.com/aws/aws-cdk/issues/13541#issuecomment-801606777)
+    ```sh
+    # steps
+    npm install -g npm@6
+    rm package-lock.json
+    npm i
+    ```
+
 
 ## Resources
 

@@ -1,6 +1,8 @@
 import * as cdk from "@aws-cdk/core";
 import { ApiGatewayToLambda } from "@aws-solutions-constructs/aws-apigateway-lambda";
+import * as defaults from "@aws-solutions-constructs/core";
 import * as lambda from "@aws-cdk/aws-lambda";
+import * as api from "@aws-cdk/aws-apigateway";
 export class AwsCdkPipelinePlaygroundStack extends cdk.Stack {
   public readonly urlOutput: cdk.CfnOutput;
 
@@ -16,6 +18,11 @@ export class AwsCdkPipelinePlaygroundStack extends cdk.Stack {
           // This assumes a handler function in lib/lambda/index.js
           code: lambda.Code.fromAsset(`${__dirname}/lambda`),
           handler: "index.handler",
+        },
+        apiGatewayProps: {
+          defaultMethodOptions: {
+            authorizationType: api.AuthorizationType.NONE,
+          },
         },
       }
     );
