@@ -2,7 +2,9 @@
 
 learn AWS [CDK Pipelines](https://aws.amazon.com/blogs/developer/cdk-pipelines-continuous-delivery-for-aws-cdk-applications/)
 
-## Running
+CI/CD pipeline and solution code exist in single CDK project / repo.  Any commits automatically trigger a [CodePipeline](https://aws.amazon.com/codepipeline/) to run and deploy changes to production.
+
+## Steps
 
 ```sh
 npx cdk init --language=typescript
@@ -23,6 +25,31 @@ npm i \
     @aws-cdk/aws-lambda@$CDK_VERSION \
     @aws-solutions-constructs/aws-apigateway-lambda@$CDK_VERSION
 
+# build locally
+npm run build
+
+# test
+npm run test
+
+# create *this* repo in github and do initial push to ensure it exists for
+# CodePipeline to find
+
+# provision pipeline
+
+# [optional] if not already ran
+cdk bootstrap
+
+# one-time operation, deploy the pipeline stack from local machine
+cdk deploy  --force --require-approval never
+
+# add stage to pipeline.  this is the api gateway -> lambda stack
+code lib/aws-cdk-demo-pipeline-stack.ts # edit
+
+# push changes and pipeline will run and deploy PreProd stage
+npm run build
+git commit -am 'Add PreProd stage'
+git push
+
 
 
 ```
@@ -37,6 +64,15 @@ npm i \
     npm i
     ```
 
+## Screenshots
+
+<img src="https://www.evernote.com/l/AAE6NqeDir5OzJ03mkeMXRIxup_JygJDKG8B/image.png" alt="" width="75%" />
+
+<img src="https://www.evernote.com/l/AAEubcb4P69PmJ1Av4SHOYfWhgyaQWmLBBsB/image.png" alt="" width="75%" />
+
+<img src="https://www.evernote.com/l/AAHfP1motBxP3KPCmTNkFV2hatoUecHL5DgB/image.png" alt="" width="75%" />
+
+<img src="https://www.evernote.com/l/AAHSk5xUmvdPm477hfHkLxRVPqGMUROrFLwB/image.png" alt="" width="75%" />
 
 ## Resources
 
