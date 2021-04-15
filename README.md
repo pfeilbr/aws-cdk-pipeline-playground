@@ -50,6 +50,9 @@ npm run build
 git commit -am 'Add PreProd stage'
 git push
 
+# the pipeline automatically reconfigures itself to add the new stage and
+# deploy to it
+
 
 
 ```
