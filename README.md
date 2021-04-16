@@ -2,7 +2,7 @@
 
 learn AWS [CDK Pipelines](https://aws.amazon.com/blogs/developer/cdk-pipelines-continuous-delivery-for-aws-cdk-applications/)
 
-CI/CD pipeline and solution code exist in single CDK project / repo.  Any commits to `main` automatically trigger a [CodePipeline](https://aws.amazon.com/codepipeline/) to run and deploy changes to production.  The changes can be to the solution or the pipeline itself.
+Example CI/CD pipeline and solution code exist in single CDK project / repo in all authored in same language (typescript).  Any commits to `main` automatically trigger a [CodePipeline](https://aws.amazon.com/codepipeline/) to run and deploy changes to production.  The changes can be to the solution or the pipeline itself.
 
 ## High-level Workflow
 
