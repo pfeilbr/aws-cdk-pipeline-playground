@@ -4,13 +4,15 @@ learn AWS [CDK Pipelines](https://aws.amazon.com/blogs/developer/cdk-pipelines-c
 
 Example CI/CD pipeline and solution code exist in single CDK project / repo in all authored in same language (typescript).  Any commits to `main` automatically trigger a [CodePipeline](https://aws.amazon.com/codepipeline/) to run and deploy changes to production.  The changes can be to the solution or the pipeline itself.
 
+## Summary
+
 * Simple API Gateway -> Lambda solution to exercise CDK pipeline capabilities. via [AWS Solutions Constructs | aws-apigateway-lambda](https://docs.aws.amazon.com/solutions/latest/constructs/aws-apigateway-lambda.html)
 * Creation of PreProd enviroment (stack) with e2e integration tests.
 * Creation of Prod environment (stack)
 * Automated creation of metrics, alarms, and notification (sns email) for API Gateway and Lambda resources via [awslabs/cdk-watchful](https://github.com/awslabs/cdk-watchful)
-* Automated notification (sns email) of CodePipeline state change events via EventBridge -> SNS rule.
+* Automated notification (sns email) of CodePipeline state change events (`STARTED`, `SUCCEEDED`, `FAILED`) via EventBridge -> SNS rule.
 
-## High-level Workflow
+## High-level Development Workflow
 
 1. Create solution stack [`lib/aws-cdk-pipeline-playground-stack.ts`](lib/aws-cdk-pipeline-playground-stack.ts) (`API gateway -> Lambda`).
 1. Create stage [`lib/aws-cdk-pipeline-demo-stage.ts`](lib/aws-cdk-pipeline-demo-stage.ts)(`CdkpipelinesDemoStage`) that wraps the solution stack (`AwsCdkPipelinePlaygroundStack`) for CodePipeline
@@ -106,6 +108,8 @@ npx cdk bootstrap \
 
 ## Screenshots
 
+### AWS Console | CodePipeline
+
 <img src="https://www.evernote.com/l/AAE6NqeDir5OzJ03mkeMXRIxup_JygJDKG8B/image.png" alt="" width="75%" />
 
 <img src="https://www.evernote.com/l/AAEubcb4P69PmJ1Av4SHOYfWhgyaQWmLBBsB/image.png" alt="" width="75%" />
@@ -113,6 +117,19 @@ npx cdk bootstrap \
 <img src="https://www.evernote.com/l/AAHfP1motBxP3KPCmTNkFV2hatoUecHL5DgB/image.png" alt="" width="75%" />
 
 <img src="https://www.evernote.com/l/AAHSk5xUmvdPm477hfHkLxRVPqGMUROrFLwB/image.png" alt="" width="75%" />
+
+### SNS Email Notifications
+
+CodePipeline State Change COMPLETED
+<img src="https://www.evernote.com/l/AAEEPW3ju7dGVZQz93zo4d4UEC0_CAg8wiIB/image.png" alt="" width="75%" />
+
+API Gateway 5XX Count Threshold Hit
+<img src="https://www.evernote.com/l/AAF_uNyvwUxB25RNyVJS-LF5bpg25ddWK_8B/image.png" alt="" width="75%" />
+
+Lambda Error Count Threshold Hit
+<img src="https://www.evernote.com/l/AAHGMhNbuAFBlLHq1jAK85_c9l4CUwDnZVsB/image.png" alt="" width="75%" />
+
+
 
 ## Resources
 
