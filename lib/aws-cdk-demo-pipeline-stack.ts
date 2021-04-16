@@ -4,6 +4,9 @@ import { Construct, SecretValue, Stack, StackProps } from "@aws-cdk/core";
 import { CdkPipeline, SimpleSynthAction } from "@aws-cdk/pipelines";
 import { CdkpipelinesDemoStage } from "../lib/aws-cdk-pipeline-demo-stage";
 import { ShellScriptAction } from "@aws-cdk/pipelines";
+import * as sns from "@aws-cdk/aws-sns";
+import * as subs from "@aws-cdk/aws-sns-subscriptions";
+import * as event_targets from "@aws-cdk/aws-events-targets";
 
 /**
  * The stack that defines the application pipeline
@@ -60,10 +63,20 @@ export class CdkpipelinesDemoPipelineStack extends Stack {
     );
 
     // add production stage
-    pipeline.addApplicationStage(
+    const prodStage = pipeline.addApplicationStage(
       new CdkpipelinesDemoStage(this, "Prod", {
         env: { account: "529276214230", region: "us-east-1" },
       })
     );
+
+    const topic = new sns.Topic(this, `CodePipelineStateChange`, {
+      displayName: `${pipeline.codePipeline.pipelineName} Pipeline State Change`,
+    });
+    const topicEventTarget = new event_targets.SnsTopic(topic);
+    topic.addSubscription(new subs.EmailSubscription("brian.pfeil@gmail.com"));
+    const rule = pipeline.codePipeline.onStateChange(
+      `${pipeline.codePipeline.pipelineName} State Change`
+    );
+    rule.addTarget(topicEventTarget);
   }
 }
