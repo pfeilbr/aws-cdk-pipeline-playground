@@ -4,6 +4,12 @@ learn AWS [CDK Pipelines](https://aws.amazon.com/blogs/developer/cdk-pipelines-c
 
 Example CI/CD pipeline and solution code exist in single CDK project / repo in all authored in same language (typescript).  Any commits to `main` automatically trigger a [CodePipeline](https://aws.amazon.com/codepipeline/) to run and deploy changes to production.  The changes can be to the solution or the pipeline itself.
 
+* Simple API Gateway -> Lambda solution to exercise CDK pipeline capabilities. via [AWS Solutions Constructs | aws-apigateway-lambda](https://docs.aws.amazon.com/solutions/latest/constructs/aws-apigateway-lambda.html)
+* Creation of PreProd enviroment (stack) with e2e integration tests.
+* Creation of Prod environment (stack)
+* Automated creation of metrics, alarms, and notification (sns email) for API Gateway and Lambda resources via [awslabs/cdk-watchful](https://github.com/awslabs/cdk-watchful)
+* Automated notification (sns email) of CodePipeline state change events via EventBridge -> SNS rule.
+
 ## High-level Workflow
 
 1. Create solution stack [`lib/aws-cdk-pipeline-playground-stack.ts`](lib/aws-cdk-pipeline-playground-stack.ts) (`API gateway -> Lambda`).

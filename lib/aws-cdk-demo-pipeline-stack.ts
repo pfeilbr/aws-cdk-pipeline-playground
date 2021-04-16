@@ -74,9 +74,7 @@ export class CdkpipelinesDemoPipelineStack extends Stack {
     });
     const topicEventTarget = new event_targets.SnsTopic(topic);
     topic.addSubscription(new subs.EmailSubscription("brian.pfeil@gmail.com"));
-    const rule = pipeline.codePipeline.onStateChange(
-      `${pipeline.codePipeline.pipelineName} State Change`
-    );
+    const rule = pipeline.codePipeline.onStateChange(`CodePipelineStateChange`);
     rule.addTarget(topicEventTarget);
   }
 }
