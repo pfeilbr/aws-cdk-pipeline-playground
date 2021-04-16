@@ -1,3 +1,4 @@
+import * as cdk from "@aws-cdk/core";
 import * as codepipeline from "@aws-cdk/aws-codepipeline";
 import * as codepipeline_actions from "@aws-cdk/aws-codepipeline-actions";
 import { Construct, SecretValue, Stack, StackProps } from "@aws-cdk/core";
@@ -46,6 +47,11 @@ export class CdkpipelinesDemoPipelineStack extends Stack {
       env: { account: "529276214230", region: "us-east-1" },
     });
 
+    cdk.Tags.of(preprod).add("Application", "WebService");
+    cdk.Tags.of(preprod).add("Environment", "PreProd");
+    cdk.Tags.of(preprod).add("StageName", preprod.stageName);
+    cdk.Tags.of(preprod).add("Costcenter", "999999999");
+
     const preprodStage = pipeline.addApplicationStage(preprod);
     preprodStage.addActions(
       new ShellScriptAction({
@@ -62,12 +68,17 @@ export class CdkpipelinesDemoPipelineStack extends Stack {
       })
     );
 
+    const prod = new CdkpipelinesDemoStage(this, "Prod", {
+      env: { account: "529276214230", region: "us-east-1" },
+    });
+
     // add production stage
-    const prodStage = pipeline.addApplicationStage(
-      new CdkpipelinesDemoStage(this, "Prod", {
-        env: { account: "529276214230", region: "us-east-1" },
-      })
-    );
+    const prodStage = pipeline.addApplicationStage(prod);
+
+    cdk.Tags.of(preprod).add("Application", "WebService");
+    cdk.Tags.of(preprod).add("Environment", "Prod");
+    cdk.Tags.of(preprod).add("StageName", prod.stageName);
+    cdk.Tags.of(preprod).add("Costcenter", "999999999");
 
     const topic = new sns.Topic(this, `CodePipelineStateChange`, {
       displayName: `${pipeline.codePipeline.pipelineName} Pipeline State Change`,
